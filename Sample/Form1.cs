@@ -28,6 +28,8 @@ namespace Sample
         int g_RegisterCount = 0;
         const int REGISTER_FINGER_COUNT = 3;
 
+        int g_nName = 0;
+
         byte[][] g_RegTmps = new byte[3][];
 	      byte[] g_RegTmp = new byte[2048];
         byte[] g_VerTmp = new byte[2048];
@@ -65,10 +67,10 @@ namespace Sample
                 Array.Clear(paramValue, 0, paramValue.Length);
                 ZKFPCap.sensorGetVersion(paramValue, paramValue.Length);
 
-		        ret = paramValue.Length;
+		            ret = paramValue.Length;
                 Array.Clear(paramValue, 0, paramValue.Length);
                 ZKFPCap.sensorGetParameterEx(g_Handle, 1, paramValue, ref ret);
-		        g_nWidth = BitConverter.ToInt32(paramValue, 0);
+		            g_nWidth = BitConverter.ToInt32(paramValue, 0);
 
                 this.picFP.Width = g_nWidth;
 
@@ -113,7 +115,7 @@ namespace Sample
 
                 // Fingerprint Alg
                 short[] iSize = new short[24];
-	            iSize[0] = (short)g_nWidth;
+	              iSize[0] = (short)g_nWidth;
                 iSize[1] = (short)g_nHeight;
                 iSize[20] = (short)g_nWidth;
                 iSize[21] = (short)g_nHeight; ;
@@ -141,7 +143,7 @@ namespace Sample
                 captureThread.Start();
                 g_bIsTimeToDie = false;
 
-		        gConnected = true;
+		            gConnected = true;
                 btnRegister.Enabled = true;
                 btnVerify.Enabled = true;
                 btnConnect.Text = "Disconnect Sensor";
@@ -150,12 +152,12 @@ namespace Sample
 	        }
 	        else
 	        {
-		        FreeSensor();
+		            FreeSensor();
 
                 ZKFinger10.BIOKEY_DB_CLEAR(g_biokeyHandle);
                 ZKFinger10.BIOKEY_CLOSE(g_biokeyHandle);
 
-		        gConnected = false;
+		            gConnected = false;
                 btnRegister.Enabled = false;
                 btnVerify.Enabled = false;
                 btnConnect.Text = "Connect Sensor";
@@ -198,6 +200,7 @@ namespace Sample
                         {
                             MemoryStream ms = new MemoryStream();
                             BitmapFormat.GetBitmap(g_FPBuffer, g_nWidth, g_nHeight, ref ms);
+                            BitmapFormat.WriteBitmap(g_FPBuffer, g_nWidth, g_nHeight, g_nName++);
                             Bitmap bmp = new Bitmap(ms);
                             this.picFP.Image = bmp;
 
@@ -249,6 +252,7 @@ namespace Sample
                                         {
                                             ZKFinger10.BIOKEY_DB_ADD(g_biokeyHandle, ++g_RegisterCount, size, g_RegTmp);
                                             txtPrompt.Text = string.Format("Register succeeded, fid={0}, totalCount={1}", g_RegisterCount, ZKFinger10.BIOKEY_DB_COUNT(g_biokeyHandle));
+                                            //BitmapFormat.WriteBitmap(g_RegTmp, g_nWidth, g_nHeight);
 
                                             g_IsRegister = false;
                                         }

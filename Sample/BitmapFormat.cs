@@ -39,8 +39,8 @@ namespace Sample
         }
 
         /*******************************************
-        * 函数名称：RotatePic       
-        * 函数功能：旋转图片，目的是保存和显示的图片与按的指纹方向不同     
+        * 函数名称：RotatePic
+        * 函数功能：旋转图片，目的是保存和显示的图片与按的指纹方向不同
         * 函数入参：BmpBuf---旋转前的指纹字符串
         * 函数出参：ResBuf---旋转后的指纹字符串
         * 函数返回：无
@@ -71,8 +71,8 @@ namespace Sample
         }
 
         /*******************************************
-        * 函数名称：StructToBytes       
-        * 函数功能：将结构体转化成无符号字符串数组     
+        * 函数名称：StructToBytes
+        * 函数功能：将结构体转化成无符号字符串数组
         * 函数入参：StructObj---被转化的结构体
         *           Size---被转化的结构体的大小
         * 函数出参：无
@@ -122,8 +122,8 @@ namespace Sample
         }
 
         /*******************************************
-        * 函数名称：GetBitmap       
-        * 函数功能：将传进来的数据保存为图片     
+        * 函数名称：GetBitmap
+        * 函数功能：将传进来的数据保存为图片
         * 函数入参：buffer---图片数据
         *           nWidth---图片的宽度
         *           nHeight---图片的高度
@@ -190,20 +190,21 @@ namespace Sample
         }
 
         /*******************************************
-        * 函数名称：WriteBitmap       
-        * 函数功能：将传进来的数据保存为图片     
+        * 函数名称：WriteBitmap
+        * 函数功能：将传进来的数据保存为图片
         * 函数入参：buffer---图片数据
         *           nWidth---图片的宽度
         *           nHeight---图片的高度
         * 函数出参：无
         * 函数返回：无
         *********************************************/
-        public static void WriteBitmap(byte[] buffer, int nWidth, int nHeight)
+        public static void WriteBitmap(byte[] buffer, int nWidth, int nHeight, int nName)
         {
             int ColorIndex = 0;
             ushort m_nBitCount = 8;
             int m_nColorTableEntries = 256;
             byte[] ResBuf = new byte[nWidth * nHeight];
+            string name;
 
             try
             {
@@ -232,7 +233,8 @@ namespace Sample
                 BmpHeader.bfReserved1 = 0;
                 BmpHeader.bfReserved2 = 0;
 
-                Stream FileStream = File.Open("finger.bmp", FileMode.Create, FileAccess.Write);
+                name = String.Format("C:\\Users\\BigwolfDoG\\Desktop\\课设\\Sample\\bin\\Debug\\image\\{0}.bmp", nName);
+                Stream FileStream = File.Open(name, FileMode.Create, FileAccess.Write);
                 BinaryWriter TmpBinaryWriter = new BinaryWriter(FileStream);
 
                 TmpBinaryWriter.Write(StructToBytes(BmpHeader, 14));

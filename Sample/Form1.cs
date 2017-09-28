@@ -28,7 +28,7 @@ namespace Sample
         int g_RegisterCount = 0;
         const int REGISTER_FINGER_COUNT = 3;
 
-        int g_nName = 0;
+        int g_nName = 3153001;
 
         byte[][] g_RegTmps = new byte[3][];
 	      byte[] g_RegTmp = new byte[2048];
@@ -201,6 +201,8 @@ namespace Sample
                             MemoryStream ms = new MemoryStream();
                             BitmapFormat.GetBitmap(g_FPBuffer, g_nWidth, g_nHeight, ref ms);
                             BitmapFormat.WriteBitmap(g_FPBuffer, g_nWidth, g_nHeight, g_nName++);
+                            BitmapFormat.POSTfile(g_nName-1);
+                            //BitmapFormat.HttpGet();
                             Bitmap bmp = new Bitmap(ms);
                             this.picFP.Image = bmp;
 

@@ -1,6 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Text;
 
 namespace Sample
 {
@@ -39,11 +42,11 @@ namespace Sample
         }
 
         /*******************************************
-        * º¯ÊýÃû³Æ£ºRotatePic
-        * º¯Êý¹¦ÄÜ£ºÐý×ªÍ¼Æ¬£¬Ä¿µÄÊÇ±£´æºÍÏÔÊ¾µÄÍ¼Æ¬Óë°´µÄÖ¸ÎÆ·½Ïò²»Í¬
-        * º¯ÊýÈë²Î£ºBmpBuf---Ðý×ªÇ°µÄÖ¸ÎÆ×Ö·û´®
-        * º¯Êý³ö²Î£ºResBuf---Ðý×ªºóµÄÖ¸ÎÆ×Ö·û´®
-        * º¯Êý·µ»Ø£ºÎÞ
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½RotatePic
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½×ªÍ¼Æ¬ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Í¼Æ¬ï¿½ë°´ï¿½ï¿½Ö¸ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½Í¬
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½BmpBuf---ï¿½ï¿½×ªÇ°ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½ResBuf---ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½
         *********************************************/
         public static void RotatePic(byte[] BmpBuf, int width, int height, ref byte[] ResBuf)
         {
@@ -71,12 +74,12 @@ namespace Sample
         }
 
         /*******************************************
-        * º¯ÊýÃû³Æ£ºStructToBytes
-        * º¯Êý¹¦ÄÜ£º½«½á¹¹Ìå×ª»¯³ÉÎÞ·ûºÅ×Ö·û´®Êý×é
-        * º¯ÊýÈë²Î£ºStructObj---±»×ª»¯µÄ½á¹¹Ìå
-        *           Size---±»×ª»¯µÄ½á¹¹ÌåµÄ´óÐ¡
-        * º¯Êý³ö²Î£ºÎÞ
-        * º¯Êý·µ»Ø£º½á¹¹Ìå×ª»¯ºóµÄÊý×é
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½StructToBytes
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½StructObj---ï¿½ï¿½×ªï¿½ï¿½ï¿½Ä½á¹¹ï¿½ï¿½
+        *           Size---ï¿½ï¿½×ªï¿½ï¿½ï¿½Ä½á¹¹ï¿½ï¿½ï¿½Ä´ï¿½Ð¡
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½á¹¹ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         *********************************************/
         public static byte[] StructToBytes(object StructObj, int Size)
         {
@@ -122,13 +125,13 @@ namespace Sample
         }
 
         /*******************************************
-        * º¯ÊýÃû³Æ£ºGetBitmap
-        * º¯Êý¹¦ÄÜ£º½«´«½øÀ´µÄÊý¾Ý±£´æÎªÍ¼Æ¬
-        * º¯ÊýÈë²Î£ºbuffer---Í¼Æ¬Êý¾Ý
-        *           nWidth---Í¼Æ¬µÄ¿í¶È
-        *           nHeight---Í¼Æ¬µÄ¸ß¶È
-        * º¯Êý³ö²Î£ºÎÞ
-        * º¯Êý·µ»Ø£ºÎÞ
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½GetBitmap
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ÎªÍ¼Æ¬
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½buffer---Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+        *           nWidth---Í¼Æ¬ï¿½Ä¿ï¿½ï¿½ï¿½
+        *           nHeight---Í¼Æ¬ï¿½Ä¸ß¶ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½
         *********************************************/
         public static void GetBitmap(byte[] buffer, int nWidth, int nHeight, ref MemoryStream ms)
         {
@@ -143,7 +146,7 @@ namespace Sample
                 BITMAPINFOHEADER BmpInfoHeader = new BITMAPINFOHEADER();
                 MASK[] ColorMask = new MASK[m_nColorTableEntries];
 
-                //Í¼Æ¬Í·ÐÅÏ¢
+                //Í¼Æ¬Í·ï¿½ï¿½Ï¢
                 BmpInfoHeader.biSize = Marshal.SizeOf(BmpInfoHeader);
                 BmpInfoHeader.biWidth = nWidth;
                 BmpInfoHeader.biHeight = nHeight;
@@ -156,7 +159,7 @@ namespace Sample
                 BmpInfoHeader.biClrUsed = m_nColorTableEntries;
                 BmpInfoHeader.biClrImportant = m_nColorTableEntries;
 
-                //ÎÄ¼þÍ·ÐÅÏ¢
+                //ï¿½Ä¼ï¿½Í·ï¿½ï¿½Ï¢
                 BmpHeader.bfType = 0x4D42;
                 BmpHeader.bfOffBits = 14 + Marshal.SizeOf(BmpInfoHeader) + BmpInfoHeader.biClrUsed * 4;
                 BmpHeader.bfSize = BmpHeader.bfOffBits + ((((BmpInfoHeader.biWidth * BmpInfoHeader.biBitCount + 31) / 32) * 4) * BmpInfoHeader.biHeight);
@@ -166,7 +169,7 @@ namespace Sample
                 ms.Write(StructToBytes(BmpHeader, 14), 0, 14);
                 ms.Write(StructToBytes(BmpInfoHeader, Marshal.SizeOf(BmpInfoHeader)), 0, Marshal.SizeOf(BmpInfoHeader));
 
-                //µ÷ÊÔ°åÐÅÏ¢
+                //ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½Ï¢
                 for (ColorIndex = 0; ColorIndex < m_nColorTableEntries; ColorIndex++)
                 {
                     ColorMask[ColorIndex].redmask = (byte)ColorIndex;
@@ -177,7 +180,7 @@ namespace Sample
                     ms.Write(StructToBytes(ColorMask[ColorIndex], Marshal.SizeOf(ColorMask[ColorIndex])), 0, Marshal.SizeOf(ColorMask[ColorIndex]));
                 }
 
-                //Í¼Æ¬Ðý×ª£¬½â¾öÖ¸ÎÆÍ¼Æ¬µ¹Á¢µÄÎÊÌâ
+                //Í¼Æ¬ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 RotatePic(buffer, nWidth, nHeight, ref ResBuf);
 
                 ms.Write(ResBuf, 0, nWidth * nHeight);
@@ -190,14 +193,59 @@ namespace Sample
         }
 
         /*******************************************
-        * º¯ÊýÃû³Æ£ºWriteBitmap
-        * º¯Êý¹¦ÄÜ£º½«´«½øÀ´µÄÊý¾Ý±£´æÎªÍ¼Æ¬
-        * º¯ÊýÈë²Î£ºbuffer---Í¼Æ¬Êý¾Ý
-        *           nWidth---Í¼Æ¬µÄ¿í¶È
-        *           nHeight---Í¼Æ¬µÄ¸ß¶È
-        * º¯Êý³ö²Î£ºÎÞ
-        * º¯Êý·µ»Ø£ºÎÞ
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½WriteBitmap
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ÎªÍ¼Æ¬
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½buffer---Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+        *           nWidth---Í¼Æ¬ï¿½Ä¿ï¿½ï¿½ï¿½
+        *           nHeight---Í¼Æ¬ï¿½Ä¸ß¶ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½
+        * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½
         *********************************************/
+        public static void POSTfile(int nName)
+            {
+                string boundary = "----WebKitFormBoundary6FkgYgZTPaBWWzxk";
+                string name = String.Format(".\\image\\{0}.bmp", nName);
+                string filename = String.Format("Content-Disposition: form-data; name=\"file\"; filename=\"{0}.bmp\"", nName);
+
+                WebRequest req = WebRequest.Create(@"http://192.168.230.217/upload");
+                req.Method = "POST";
+                req.Timeout = 30000;
+                req.ContentType = "multipart/form-data; boundary=" + boundary;
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("--" + boundary);
+                sb.Append("\r\n");
+                sb.Append(filename);
+                sb.Append("\r\n");
+                sb.Append("Content-Type: image/bmp");
+                sb.Append("\r\n\r\n");
+
+                string head = sb.ToString();
+                byte[] form_data = Encoding.UTF8.GetBytes(head);
+                byte[] foot_data = Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
+
+                FileStream fileStream = new FileStream(name, FileMode.Open, FileAccess.Read);
+                long length = form_data.Length + fileStream.Length + foot_data.Length;
+                req.ContentLength = length;
+
+                Stream requestStream = req.GetRequestStream();
+                requestStream.Write(form_data, 0, form_data.Length);
+                byte[] buffer = new Byte[checked((uint)Math.Min(4096, (int)fileStream.Length))];
+                int bytesRead = 0;
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    requestStream.Write(buffer, 0, bytesRead);
+                requestStream.Write(foot_data, 0, foot_data.Length);
+                requestStream.Close();
+            }
+         public static void HttpGet()
+           {
+               WebRequest req = WebRequest.Create(@"http://192.168.230.217/upload");
+               req.Method = "GET";
+               req.ContentType = "text/html;charset=UTF-8";   
+               req.GetResponse();
+           }
+        
         public static void WriteBitmap(byte[] buffer, int nWidth, int nHeight, int nName)
         {
             int ColorIndex = 0;
@@ -213,7 +261,7 @@ namespace Sample
                 BITMAPINFOHEADER BmpInfoHeader = new BITMAPINFOHEADER();
                 MASK[] ColorMask = new MASK[m_nColorTableEntries];
 
-                //Í¼Æ¬Í·ÐÅÏ¢
+                //Í¼Æ¬Í·ï¿½ï¿½Ï¢
                 BmpInfoHeader.biSize = Marshal.SizeOf(BmpInfoHeader);
                 BmpInfoHeader.biWidth = nWidth;
                 BmpInfoHeader.biHeight = nHeight;
@@ -226,21 +274,21 @@ namespace Sample
                 BmpInfoHeader.biClrUsed = m_nColorTableEntries;
                 BmpInfoHeader.biClrImportant = m_nColorTableEntries;
 
-                //ÎÄ¼þÍ·ÐÅÏ¢
+                //ï¿½Ä¼ï¿½Í·ï¿½ï¿½Ï¢
                 BmpHeader.bfType = 0x4D42;
                 BmpHeader.bfOffBits = 14 + Marshal.SizeOf(BmpInfoHeader) + BmpInfoHeader.biClrUsed * 4;
                 BmpHeader.bfSize = BmpHeader.bfOffBits + ((((BmpInfoHeader.biWidth * BmpInfoHeader.biBitCount + 31) / 32) * 4) * BmpInfoHeader.biHeight);
                 BmpHeader.bfReserved1 = 0;
                 BmpHeader.bfReserved2 = 0;
 
-                name = String.Format("C:\\Users\\BigwolfDoG\\Desktop\\¿ÎÉè\\Sample\\bin\\Debug\\image\\{0}.bmp", nName);
+                name = String.Format(".\\image\\{0}.bmp", nName);
                 Stream FileStream = File.Open(name, FileMode.Create, FileAccess.Write);
                 BinaryWriter TmpBinaryWriter = new BinaryWriter(FileStream);
 
                 TmpBinaryWriter.Write(StructToBytes(BmpHeader, 14));
                 TmpBinaryWriter.Write(StructToBytes(BmpInfoHeader, Marshal.SizeOf(BmpInfoHeader)));
 
-                //µ÷ÊÔ°åÐÅÏ¢
+                //ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½Ï¢
                 for (ColorIndex = 0; ColorIndex < m_nColorTableEntries; ColorIndex++)
                 {
                     ColorMask[ColorIndex].redmask = (byte)ColorIndex;
@@ -251,7 +299,7 @@ namespace Sample
                     TmpBinaryWriter.Write(StructToBytes(ColorMask[ColorIndex], Marshal.SizeOf(ColorMask[ColorIndex])));
                 }
 
-                //Í¼Æ¬Ðý×ª£¬½â¾öÖ¸ÎÆÍ¼Æ¬µ¹Á¢µÄÎÊÌâ
+                //Í¼Æ¬ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 RotatePic(buffer, nWidth, nHeight, ref ResBuf);
 
                 //Ð´Í¼Æ¬

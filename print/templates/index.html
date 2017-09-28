@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Finger{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    {% for i in list %}
+    <span style="font-family:Microsoft YaHei;font-size:28px;color:red; width:328px; height:356px">
+        <div style="position:relative; width:328px; height:386px; float:left">  
+            <img src="{{ url_for('static', filename=i+".bmp") }}" />
+    　　    <div style="position:absolute; z-index:2; left:190px; top:315px">0{{i}}</div>  
+        </div>
+    </span>  
+    {% endfor %}
+
+<script language="JavaScript">
+function myrefresh()
+{
+   window.location.reload();
+}
+setTimeout('myrefresh()',1000);
+</script>
+</div>
+{% endblock %}
